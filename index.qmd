@@ -1,5 +1,6 @@
 ---
-title: "les_reports"
+title: "index"
+format: html
 ---
 
 This is a Quarto website.
