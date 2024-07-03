@@ -6,7 +6,7 @@ website:
   title: "les_reports"
   navbar:
     left:
-      - href: readme.qmd
+      - href: index.html
         text: Home
       - may.qmd
       - august.qmd
