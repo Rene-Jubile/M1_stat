@@ -1,0 +1,205 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "index",
+    "section": "",
+    "text": "This is a Quarto website."
+  },
+  {
+    "objectID": "august.html",
+    "href": "august.html",
+    "title": "August’s report",
+    "section": "",
+    "text": "## Load libraries\n# install.packages(c(\"pacman\", \"rio\")\n\npacman::p_load(gstat, tidyverse, sf, sp)"
+  },
+  {
+    "objectID": "august.html#load-data",
+    "href": "august.html#load-data",
+    "title": "August’s report",
+    "section": "Load data",
+    "text": "Load data\n\ndata &lt;- read.table(file = \"data/Data_Example_1.txt\", header = T, sep = \"\\t\") %&gt;% \n  filter(month == params$month)"
+  },
+  {
+    "objectID": "august.html#wrangling-data",
+    "href": "august.html#wrangling-data",
+    "title": "August’s report",
+    "section": "Wrangling data",
+    "text": "Wrangling data\n\ndata$sampleID &lt;- as.numeric(data$sampleID)\ndata$subplot &lt;- as.numeric(data$subplot)\ndata$OTU_all_taxa &lt;- as.numeric(data$OTU_all_taxa)\nstr(data)\n\n'data.frame':   60 obs. of  6 variables:\n $ sampleID    : num  181 182 183 184 185 186 187 188 189 190 ...\n $ month       : chr  \"August\" \"August\" \"August\" \"August\" ...\n $ subplot     : num  1 1 2 2 3 3 4 4 5 5 ...\n $ x           : num  1.33 1.33 2.5 2.5 3.68 ...\n $ y           : num  9.75 9.25 9.75 9.25 8.75 8.25 8.75 8.25 9.75 9.25 ...\n $ OTU_all_taxa: num  28 23 29 20 30 26 23 26 27 22 ..."
+  },
+  {
+    "objectID": "august.html#variogramme",
+    "href": "august.html#variogramme",
+    "title": "August’s report",
+    "section": "1. Variogramme",
+    "text": "1. Variogramme\n\n# compute undirected (isotropic) empirical semivariogram\nvar1 &lt;- variogram((log(OTU_all_taxa) * 10) ~ 1, ~x + y, cutoff = 8, width = 1, \n                  alpha = 90, data = data)\n\n# create figure of empirical semivariogram\nplot(var1, plot.numbers = TRUE, xlab = \"Distance\", ylab = \"Semivariance\", cex = 1, cex.axis = 2)\n\n\n\n\n\n\n\n\n\n# compute semivariogram model based on the empiral semivariogram 'var1'\nmod1 &lt;- fit.variogram(var1, vgm(psill = NA, c(\"Exp\", \"Sph\"), range = NA, 1), fit.sills = TRUE, fit.ranges = TRUE, fit.method = 1)\n\nmod1\n\n  model    psill    range\n1   Sph 5.532829 1.392824\n\n\n\n# plot figure of semivariogram model\nplot(var1, plot.numbers = TRUE, model = mod1, xlab = \"Distance\", ylab = \"Semivariance\")"
+  },
+  {
+    "objectID": "report.html",
+    "href": "report.html",
+    "title": "April’s report",
+    "section": "",
+    "text": "# install.packages(c(\"pacman\", \"rio\")\n\npacman::p_load(gstat, tidyverse, sf, sp)"
+  },
+  {
+    "objectID": "report.html#load-libraries",
+    "href": "report.html#load-libraries",
+    "title": "April’s report",
+    "section": "",
+    "text": "# install.packages(c(\"pacman\", \"rio\")\n\npacman::p_load(gstat, tidyverse, sf, sp)"
+  },
+  {
+    "objectID": "report.html#load-data",
+    "href": "report.html#load-data",
+    "title": "April’s report",
+    "section": "Load data",
+    "text": "Load data\n\ndata &lt;- read.table(file = \"data/Data_Example_1.txt\", header = T, sep = \"\\t\") %&gt;% \n  filter(month == params$month)"
+  },
+  {
+    "objectID": "report.html#wrangling-data",
+    "href": "report.html#wrangling-data",
+    "title": "April’s report",
+    "section": "Wrangling data",
+    "text": "Wrangling data\n\ndata$sampleID &lt;- as.numeric(data$sampleID)\ndata$subplot &lt;- as.numeric(data$subplot)\ndata$OTU_all_taxa &lt;- as.numeric(data$OTU_all_taxa)\nstr(data)\n\n'data.frame':   60 obs. of  6 variables:\n $ sampleID    : num  1 2 3 4 5 6 7 8 9 10 ...\n $ month       : chr  \"April\" \"April\" \"April\" \"April\" ...\n $ subplot     : num  1 1 2 2 3 3 4 4 5 5 ...\n $ x           : num  0.835 0.835 2.505 2.505 3.68 ...\n $ y           : num  8.75 8.25 8.75 8.25 9.75 9.25 9.75 9.25 9.75 9.25 ...\n $ OTU_all_taxa: num  20 20 23 22 20 20 24 16 19 21 ..."
+  },
+  {
+    "objectID": "report.html#variogramme",
+    "href": "report.html#variogramme",
+    "title": "April’s report",
+    "section": "1. Variogramme",
+    "text": "1. Variogramme\n\n# compute undirected (isotropic) empirical semivariogram\nvar1 &lt;- variogram((log(OTU_all_taxa) * 10) ~ 1, ~x + y, cutoff = 8, width = 1, \n                  alpha = 90, data = data)\n\n# create figure of empirical semivariogram\nplot(var1, plot.numbers = TRUE, xlab = \"Distance\", ylab = \"Semivariance\", cex = 1, cex.axis = 2)\n\n\n\n\n\n\n\n\n\n# compute semivariogram model based on the empiral semivariogram 'var1'\nmod1 &lt;- fit.variogram(var1, vgm(psill = NA, c(\"Exp\", \"Sph\"), range = NA, 1), fit.sills = TRUE, fit.ranges = TRUE, fit.method = 1)\n\nmod1\n\n  model    psill     range\n1   Exp 3.176929 0.8551651\n\n\n\n# plot figure of semivariogram model\nplot(var1, plot.numbers = TRUE, model = mod1, xlab = \"Distance\", ylab = \"Semivariance\")"
+  },
+  {
+    "objectID": "october.html",
+    "href": "october.html",
+    "title": "October’s report",
+    "section": "",
+    "text": "# install.packages(c(\"pacman\", \"rio\")\n\npacman::p_load(gstat, tidyverse, sf, sp)"
+  },
+  {
+    "objectID": "october.html#load-libraries",
+    "href": "october.html#load-libraries",
+    "title": "October’s report",
+    "section": "",
+    "text": "# install.packages(c(\"pacman\", \"rio\")\n\npacman::p_load(gstat, tidyverse, sf, sp)"
+  },
+  {
+    "objectID": "october.html#load-data",
+    "href": "october.html#load-data",
+    "title": "October’s report",
+    "section": "Load data",
+    "text": "Load data\n\ndata &lt;- read.table(file = \"data/Data_Example_1.txt\", header = T, sep = \"\\t\") %&gt;% \n  filter(month == params$month)"
+  },
+  {
+    "objectID": "october.html#wrangling-data",
+    "href": "october.html#wrangling-data",
+    "title": "October’s report",
+    "section": "Wrangling data",
+    "text": "Wrangling data\n\ndata$sampleID &lt;- as.numeric(data$sampleID)\ndata$subplot &lt;- as.numeric(data$subplot)\ndata$OTU_all_taxa &lt;- as.numeric(data$OTU_all_taxa)\nstr(data)\n\n'data.frame':   60 obs. of  6 variables:\n $ sampleID    : num  241 242 243 244 245 246 247 248 249 250 ...\n $ month       : chr  \"October\" \"October\" \"October\" \"October\" ...\n $ subplot     : num  1 1 2 2 3 3 4 4 5 5 ...\n $ x           : num  0.34 0.34 2.01 2.01 4.17 ...\n $ y           : num  9.75 9.25 9.75 9.25 9.75 9.25 9.75 9.25 9.75 9.25 ...\n $ OTU_all_taxa: num  25 31 36 28 35 27 27 33 24 34 ..."
+  },
+  {
+    "objectID": "october.html#variogramme",
+    "href": "october.html#variogramme",
+    "title": "October’s report",
+    "section": "1. Variogramme",
+    "text": "1. Variogramme\n\n# compute undirected (isotropic) empirical semivariogram\nvar1 &lt;- variogram((log(OTU_all_taxa) * 10) ~ 1, ~x + y, cutoff = 8, width = 1, \n                  alpha = 90, data = data)\n\n# create figure of empirical semivariogram\nplot(var1, plot.numbers = TRUE, xlab = \"Distance\", ylab = \"Semivariance\", cex = 1, cex.axis = 2)\n\n\n\n\n\n\n\n\n\n# compute semivariogram model based on the empiral semivariogram 'var1'\nmod1 &lt;- fit.variogram(var1, vgm(psill = NA, c(\"Exp\", \"Sph\"), range = NA, 1), fit.sills = TRUE, fit.ranges = TRUE, fit.method = 1)\n\nmod1\n\n  model   psill     range\n1   Exp 2.67703 0.5196205\n\n\n\n# plot figure of semivariogram model\nplot(var1, plot.numbers = TRUE, model = mod1, xlab = \"Distance\", ylab = \"Semivariance\")"
+  },
+  {
+    "objectID": "june.html",
+    "href": "june.html",
+    "title": "June’s report",
+    "section": "",
+    "text": "## Load libraries\n# install.packages(c(\"pacman\", \"rio\")\n\npacman::p_load(gstat, tidyverse, sf, sp)"
+  },
+  {
+    "objectID": "june.html#load-data",
+    "href": "june.html#load-data",
+    "title": "June’s report",
+    "section": "Load data",
+    "text": "Load data\n\ndata &lt;- read.table(file = \"data/Data_Example_1.txt\", header = T, sep = \"\\t\") %&gt;% \n  filter(month == params$month)"
+  },
+  {
+    "objectID": "june.html#wrangling-data",
+    "href": "june.html#wrangling-data",
+    "title": "June’s report",
+    "section": "Wrangling data",
+    "text": "Wrangling data\n\ndata$sampleID &lt;- as.numeric(data$sampleID)\ndata$subplot &lt;- as.numeric(data$subplot)\ndata$OTU_all_taxa &lt;- as.numeric(data$OTU_all_taxa)\nstr(data)\n\n'data.frame':   60 obs. of  6 variables:\n $ sampleID    : num  121 122 123 124 125 126 127 128 129 130 ...\n $ month       : chr  \"June\" \"June\" \"June\" \"June\" ...\n $ subplot     : num  1 1 2 2 3 3 4 4 5 5 ...\n $ x           : num  0.835 0.835 3 3 4.67 ...\n $ y           : num  9.75 9.25 9.75 9.25 8.75 8.25 9.75 9.25 8.75 8.25 ...\n $ OTU_all_taxa: num  28 31 23 25 18 25 26 17 30 29 ..."
+  },
+  {
+    "objectID": "june.html#variogramme",
+    "href": "june.html#variogramme",
+    "title": "June’s report",
+    "section": "1. Variogramme",
+    "text": "1. Variogramme\n\n# compute undirected (isotropic) empirical semivariogram\nvar1 &lt;- variogram((log(OTU_all_taxa) * 10) ~ 1, ~x + y, cutoff = 8, width = 1, \n                  alpha = 90, data = data)\n\n# create figure of empirical semivariogram\nplot(var1, plot.numbers = TRUE, xlab = \"Distance\", ylab = \"Semivariance\", cex = 1, cex.axis = 2)\n\n\n\n\n\n\n\n\n\n# compute semivariogram model based on the empiral semivariogram 'var1'\nmod1 &lt;- fit.variogram(var1, vgm(psill = NA, c(\"Exp\", \"Sph\"), range = NA, 1), fit.sills = TRUE, fit.ranges = TRUE, fit.method = 1)\n\nmod1\n\n  model    psill     range\n1   Exp 4.930216 0.5572898\n\n\n\n# plot figure of semivariogram model\nplot(var1, plot.numbers = TRUE, model = mod1, xlab = \"Distance\", ylab = \"Semivariance\")"
+  },
+  {
+    "objectID": "november.html",
+    "href": "november.html",
+    "title": "November’s report",
+    "section": "",
+    "text": "# install.packages(c(\"pacman\", \"rio\")\n\npacman::p_load(gstat, tidyverse, sf, sp)"
+  },
+  {
+    "objectID": "november.html#load-libraries",
+    "href": "november.html#load-libraries",
+    "title": "November’s report",
+    "section": "",
+    "text": "# install.packages(c(\"pacman\", \"rio\")\n\npacman::p_load(gstat, tidyverse, sf, sp)"
+  },
+  {
+    "objectID": "november.html#load-data",
+    "href": "november.html#load-data",
+    "title": "November’s report",
+    "section": "Load data",
+    "text": "Load data\n\ndata &lt;- read.table(file = \"data/Data_Example_1.txt\", header = T, sep = \"\\t\") %&gt;% \n  filter(month == params$month)"
+  },
+  {
+    "objectID": "november.html#wrangling-data",
+    "href": "november.html#wrangling-data",
+    "title": "November’s report",
+    "section": "Wrangling data",
+    "text": "Wrangling data\n\ndata$sampleID &lt;- as.numeric(data$sampleID)\ndata$subplot &lt;- as.numeric(data$subplot)\ndata$OTU_all_taxa &lt;- as.numeric(data$OTU_all_taxa)\nstr(data)\n\n'data.frame':   60 obs. of  6 variables:\n $ sampleID    : num  301 302 303 304 305 306 307 308 309 310 ...\n $ month       : chr  \"November\" \"November\" \"November\" \"November\" ...\n $ subplot     : num  1 1 2 2 3 3 4 4 5 5 ...\n $ x           : num  0.34 0.34 2.01 2.01 4.67 ...\n $ y           : num  8.75 8.25 8.75 8.25 9.75 9.25 8.75 8.25 8.75 8.25 ...\n $ OTU_all_taxa: num  24 26 20 18 20 25 22 17 18 18 ..."
+  },
+  {
+    "objectID": "november.html#variogramme",
+    "href": "november.html#variogramme",
+    "title": "November’s report",
+    "section": "1. Variogramme",
+    "text": "1. Variogramme\n\n# compute undirected (isotropic) empirical semivariogram\nvar1 &lt;- variogram((log(OTU_all_taxa) * 10) ~ 1, ~x + y, cutoff = 8, width = 1, \n                  alpha = 90, data = data)\n\n# create figure of empirical semivariogram\nplot(var1, plot.numbers = TRUE, xlab = \"Distance\", ylab = \"Semivariance\", cex = 1, cex.axis = 2)\n\n\n\n\n\n\n\n\n\n# compute semivariogram model based on the empiral semivariogram 'var1'\nmod1 &lt;- fit.variogram(var1, vgm(psill = NA, c(\"Exp\", \"Sph\"), range = NA, 1), fit.sills = TRUE, fit.ranges = TRUE, fit.method = 1)\n\nmod1\n\n  model    psill     range\n1   Exp 4.158567 0.5170303\n\n\n\n# plot figure of semivariogram model\nplot(var1, plot.numbers = TRUE, model = mod1, xlab = \"Distance\", ylab = \"Semivariance\")"
+  },
+  {
+    "objectID": "may.html",
+    "href": "may.html",
+    "title": "May report",
+    "section": "",
+    "text": "# install.packages(c(\"pacman\", \"rio\")\n\npacman::p_load(gstat, tidyverse, sf, sp)"
+  },
+  {
+    "objectID": "may.html#load-libraries",
+    "href": "may.html#load-libraries",
+    "title": "May report",
+    "section": "",
+    "text": "# install.packages(c(\"pacman\", \"rio\")\n\npacman::p_load(gstat, tidyverse, sf, sp)"
+  },
+  {
+    "objectID": "may.html#load-data",
+    "href": "may.html#load-data",
+    "title": "May report",
+    "section": "Load data",
+    "text": "Load data\n\ndata &lt;- read.table(file = \"data/Data_Example_1.txt\", header = T, sep = \"\\t\") %&gt;% \n  filter(month == params$month)"
+  },
+  {
+    "objectID": "may.html#wrangling-data",
+    "href": "may.html#wrangling-data",
+    "title": "May report",
+    "section": "Wrangling data",
+    "text": "Wrangling data\n\ndata$sampleID &lt;- as.numeric(data$sampleID)\ndata$subplot &lt;- as.numeric(data$subplot)\ndata$OTU_all_taxa &lt;- as.numeric(data$OTU_all_taxa)\nstr(data)\n\n'data.frame':   60 obs. of  6 variables:\n $ sampleID    : num  61 62 63 64 65 66 67 68 69 70 ...\n $ month       : chr  \"May\" \"May\" \"May\" \"May\" ...\n $ subplot     : num  1 1 2 2 3 3 4 4 5 5 ...\n $ x           : num  1.33 1.33 3 3 4.17 ...\n $ y           : num  8.75 8.25 8.75 8.25 8.75 8.25 8.75 8.25 8.75 8.25 ...\n $ OTU_all_taxa: num  22 23 23 23 21 22 21 19 23 22 ..."
+  },
+  {
+    "objectID": "may.html#variogramme",
+    "href": "may.html#variogramme",
+    "title": "May report",
+    "section": "1. Variogramme",
+    "text": "1. Variogramme\n\n# compute undirected (isotropic) empirical semivariogram\nvar1 &lt;- variogram((log(OTU_all_taxa) * 10) ~ 1, ~x + y, cutoff = 8, width = 1, \n                  alpha = 90, data = data)\n\n# create figure of empirical semivariogram\nplot(var1, plot.numbers = TRUE, xlab = \"Distance\", ylab = \"Semivariance\", cex = 1, cex.axis = 2)\n\n\n\n\n\n\n\n\n\n# compute semivariogram model based on the empiral semivariogram 'var1'\nmod1 &lt;- fit.variogram(var1, vgm(psill = NA, c(\"Exp\", \"Sph\"), range = NA, 1), fit.sills = TRUE, fit.ranges = TRUE, fit.method = 1)\n\nmod1\n\n  model   psill     range\n1   Exp 2.56446 0.5317774\n\n\n\n# plot figure of semivariogram model\nplot(var1, plot.numbers = TRUE, model = mod1, xlab = \"Distance\", ylab = \"Semivariance\")"
+  }
+]
