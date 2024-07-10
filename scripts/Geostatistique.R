@@ -39,7 +39,7 @@ november <- data[data$month == "November", ]
 library(gstat)
 # compute undirected (isotropic) empirical semivariogram
 var1 <- variogram((log(OTU_all_taxa) * 10) ~ 1, ~x + y, cutoff = 8, width = 1, 
-                  alpha = 90, data = november) #Replace april by october
+                  alpha = 90, data = october) #Replace april by october
 
 # var1 <- variogram((log(OTU_all_taxa) * 10) ~ 1, ~x + y, cutoff = 8,
 #                   width = 1, data = october) #Replace april by october
@@ -47,7 +47,7 @@ var1 <- variogram((log(OTU_all_taxa) * 10) ~ 1, ~x + y, cutoff = 8, width = 1,
 # create figure of empirical semivariogram
 #pdf("Figure_Semivariogram_april_undirected.pdf", height = 5, width = 7)
 plot(var1, plot.numbers = TRUE, xlab = "Distance", ylab = "Semivariance", cex = 1, cex.axis = 2)
-dev.off()
+#dev.off()
 
 # compute semivariogram model based on the empiral semivariogram 'var1'
 mod1 <- fit.variogram(var1, vgm(psill = NA, c("Exp", "Sph"), range = NA, 1), fit.sills = TRUE, fit.ranges = TRUE, fit.method = 1)
@@ -63,7 +63,7 @@ attr(mod1, "SSErr")
 #pdf("Figure_semivariogram_model_april.pdf", height = 5, width = 7)
 # plot figure of semivariogram model
 plot(var1, plot.numbers = TRUE, model = mod1, xlab = "Distance", ylab = "Semivariance")
-dev.off()
+#dev.off()
 
 
 #   2. Krigging
@@ -77,7 +77,7 @@ x <- c(0, 10, 10, 0)
 plot(x, y)
 # adding a square with the coordinates defined by x and y
 polygon(x, y, border = "red")
-dev.off()
+#dev.off()
 
 # create matrix from x and y coordinates of the corners
 xym <- cbind(x, y)
@@ -99,7 +99,7 @@ plot(sps)
 # sampling points, the higher the number of points for which predictions should be calculated, the
 # smoother is the projection
 points(spsample(sps, n = 1000, "regular"), pch = 20)
-dev.off()
+#dev.off()
 
 
 # create a dataframe from prediction locations
@@ -115,19 +115,19 @@ library(ggplot2)
 
 #pdf(file="points_april.pdf", width = 7, height = 5)
 #plot the actual sampling points in April with point size occording to number of OTUs occurring
-ggplot(april, aes(x, y)) +
+ggplot(october, aes(x, y)) +
   geom_point(aes(size=OTU_all_taxa), color="blue", alpha=3/4) +
   labs(x="m", y="m", title = NULL, subtitle = NULL, caption = NULL, tag = NULL,
-       size="April \n \ntotal \nOTU richness") +
+       size="October \n \ntotal \nOTU richness") +
   coord_equal() +
   theme_bw()
-dev.off()
+#dev.off()
 
 #specify the columns x and y as coordinates
-coordinates(april) <- ~ x + y
+coordinates(october) <- ~ x + y
 #kriging on the untransformed data of total OTU richness from sampling locations
 #in april and the 15000 locations used for interpolation should be done
-mod1.kriged <- krige((OTU_all_taxa) ~ 1, april, grid_x_y, model=mod1)
+mod1.kriged <- krige((OTU_all_taxa) ~ 1, october, grid_x_y, model=mod1)
 ## [using ordinary kriging]
 #write kriging file as dataframe for graphical display
 frame_mod1.kriged<-as.data.frame(mod1.kriged)
@@ -140,4 +140,8 @@ ggplot(frame_mod1.kriged, aes(x=x, y=y)) +
        fill="total \nOTU richness") +
   annotate("text", label = "April", x = 9, y = 10.5, color = "black")+
   theme_classic()
-dev.off()
+#dev.off()
+
+nv <- sf::st_as_sf(october, coords = c("x", "y"))
+
+gstat()

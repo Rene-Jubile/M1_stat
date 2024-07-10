@@ -6,13 +6,14 @@ website:
   title: "les_reports"
   navbar:
     left:
-      - href: index.html
+      - href: index.qmd
         text: Home
       - may.qmd
       - august.qmd
       - june.qmd
       - november.qmd
       - october.qmd
+      - agathe_june.qmd
 
 format:
   html:

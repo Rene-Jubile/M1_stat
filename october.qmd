@@ -45,7 +45,7 @@ plot(var1, plot.numbers = TRUE, xlab = "Distance", ylab = "Semivariance", cex = 
 
 ```{r}
 # compute semivariogram model based on the empiral semivariogram 'var1'
-mod1 <- fit.variogram(var1, vgm(psill = NA, c("Exp", "Sph"), range = NA, 1), fit.sills = TRUE, fit.ranges = TRUE, fit.method = 1)
+mod1 <- fit.variogram(var1, vgm(psill = NA, "Exp", range = NA, 1), fit.sills = TRUE, fit.ranges = TRUE, fit.method = 1)
 
 mod1
 ```
