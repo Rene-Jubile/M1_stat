@@ -20,6 +20,9 @@ pacman::p_load(gstat, tidyverse, sf, sp)
 ```{r}
 data <- read.table(file = "data/Data_Example_1.txt", header = T, sep = "\t") %>% 
   filter(month == params$month)
+
+# Spécifier les colonnes x et y comme coordonnées
+coordinates(june) <- ~x + y
 ```
 
 ## Wrangling data
@@ -53,6 +56,42 @@ mod1
 ```{r}
 # plot figure of semivariogram model
 plot(var1, plot.numbers = TRUE, model = mod1, xlab = "Distance", ylab = "Semivariance")
+```
+
+## Precision du variogramme
+
+### Calcul du sill
+
+```{r}
+
+# Calcul du sill
+#sill = psill + nugget avec 
+psill <- 0.6375214 
+#et 
+nugget <- 2.0519717
+sill <- round(psill + nugget, 3)
+paste0( "La valeur du sill est : ", sill)
+```
+
+### Calcul de la précision
+
+```{r}
+
+#Précision du modèle (p) avec p = nugget / sill
+
+p = round(nugget / sill, 3)
+
+paste0("La précision du modèle est : ", p)
+```
+
+## Cross validation
+
+```{r}
+
+# Validation croisée pour évaluer la précision du modèle
+cv <- krige.cv((log(OTU_all_taxa) * 10) ~ 1, locations = june, model = mod1, nfold = nrow(june)) # cv : Corss validation
+
+cv
 ```
 
 # 2. Kriging (or krigeage)
